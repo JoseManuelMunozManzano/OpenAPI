@@ -45,3 +45,75 @@ Cada una de las cajas se corresponde con un objeto definido en el esquema OpenAP
 Sintaxis de YAML: `https://learnxinyminutes.com/docs/yaml/`
 
 En este curso vamos a usar YAML para definir nuestras especificaciones OpenAPI (también se puede usar JSON)
+
+## Defining a Microservice with OpenAPI
+
+Vamos a ver los componentes principales e iremos paso a paso desarrollando nuestra especificación OpenAPI.
+
+En este punto vamos a ver todo a un nivel muy superficial.
+
+**Swagger Hub**
+
+`https://swagger.io/tools/swaggerhub/`
+
+Voy a usar el editor web de Swagger Hub para crear las especificaciones OpenAPI.
+
+![alt Create Swagger Hub Project](./images/04-Create-Swagger-Hub-Project.png)
+
+Una vez pulsado el botón para crear la API, vemos la pantalla del editor y su conversión gráfica Swagger al lado.
+
+![alt Create Swagger Hub Editor](./images/05-Swagger-Hub-Editor.png)
+
+**OpenAPI Specification**
+
+Github con el código fuente de la especificación OpenAPI: `https://github.com/OAI/OpenAPI-Specification`
+
+Esquema para la versión 3.1: `https://github.com/OAI/OpenAPI-Specification/blob/main/schemas/v3.1/schema.yaml`
+
+Herramientas para distintos lenguajes de programación: `https://tools.openapis.org/`
+
+Para VSCode existe el plugin `OpenAPI (Swagger) Editor` aquí: `https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi`
+
+**OpenAPI Info Object**
+
+Ver: `https://swagger.io/specification/` en concreto ir a `OpenAPI Object`.
+
+![alt OpenAPI Info Object](./images/06-OpenAPI-Info-Object.png)
+
+Vemos que para definir una especificación OpenAPI válida, como mínimo hay que definir las propiedades `openapi`, `info` y `paths`.
+
+Las propiedades que podemos definir para el objeto `info` son:
+
+![alt Info Object](./images/07-Info-Object.png)
+
+Siendo `title` y `version` obligatorias.
+
+**OpenAPI Servers Object**
+
+Los `servers` son un objeto opcional, por lo que no tenemos que especificarla. Es una forma de dar a los usuarios finales información sobre donde está disponible la API.
+
+Ver: `https://swagger.io/specification/` en concreto ir a `Server Object`.
+
+![alt Server Object](./images/08-Server-Object.png)
+
+Si decidimos especificar el objeto `servers`, vemos que solo es obligatorio informar la propiedad `url`.
+
+**OpenAPI Paths Object**
+
+Los `paths` son un objeto requerido, pero puede aparecer como un array vacío:
+
+```
+paths: {}
+```
+
+Es la ruta de la API.
+
+Ver: `https://swagger.io/specification/` en concreto ir a `Paths Object`.
+
+![alt Paths Object](./images/09-Paths-Object.png)
+
+Y las propiedades posibles de cada item object del array son:
+
+![alt Paths Item Object](./images/10-Path-Item-Object.png)
+
+Que a su vez se ramifican en más objetos con sus propiedades. Ver por ejemplo `Operation Object`.
