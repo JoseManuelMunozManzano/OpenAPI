@@ -117,3 +117,66 @@ Y las propiedades posibles de cada item object del array son:
 ![alt Paths Item Object](./images/10-Path-Item-Object.png)
 
 Que a su vez se ramifican en más objetos con sus propiedades. Ver por ejemplo `Operation Object`.
+
+## OpenAPI Schema
+
+Cuando estamos proporcionando información a una API o recibiendo información de vuelta, normalmente tenemos objetos fuertemente tipados que vamos a transferir de un lado a otro. Esto se hace frecuentemente usando un esquema JSON.
+
+Un esquema se basa en metadata sobre datos. Esto es lo que va a especificar la API, lo que la API espera cuando le das datos y lo que puedes esperar recibir de vuelta. Es decir, nombres de propiedades, tipos y descripciones completas de objetos.
+
+En esta sección vamos a empezar a explorar las capacidades del esquema OpenAPI, que sigue de cerca el esquema JSON, y vamos a ver como podemos definir tipos de datos ricos para nuestros componentes OpenAPI y a proporcionar estructuras de datos.
+
+**JSON Schema**
+
+Vamos a hablar un poco sobre los esquemas JSON, pero no se usan en el curso.
+
+Documentación: `https://json-schema.org/understanding-json-schema`
+
+El esquema JSON es una herramienta para especificar la estructura de datos JSON y OpenAPI, el cual utiliza JSON o YAML.
+
+Por ejemplo, en esta web vemos el esquema JSON de un string: `https://json-schema.org/understanding-json-schema/reference/string`
+
+Parte de la especificación OpenAPI está vinculada a la definición de tipos de datos. Cuando enviamos un objeto JSON al servidor, OpenAPI le va a dar características de esquema JSON para especificar el objeto que se desea hacer post.
+
+Incluso si recibimos un objeto XML desde nuestra API, OpenAPI va a utilizar el esquema JSON, por lo que podemos decir que se basa en gran medida en el esquema JSON.
+
+No vamos a utilizar directamente el esquema JSON, pero tenemos que quedarnos con que OpenAPI hereda (no al 100%) y extiende el esquema JSON.
+
+**OpenAPI Data Types**
+
+Vamos a hablar sobre los tipos de datos de las propiedades de objetos, excluidos los mismos objetos, de OpenAPI.
+
+Documentación: 
+
+```
+https://swagger.io/docs/specification/v3_0/data-models/data-types/
+https://swagger.io/specification/#schema-object
+```
+
+En la tabla que vemos en la documentación, indicar que la propiedad `format` es específico de la aplicación. Pero también es una propiedad abierta, lo que significa que se puede extender para utilizar propiedades que no están en la tabla, como email, uuid, url... La especificación no impone restricciones, lo que da mucha flexibilidad.
+
+Esto permite ampliar la especificación si se utiliza algún tipo de herramienta para generar código o documentación.
+
+**OpenAPI Objects**
+
+Vamos a ver como crear objetos y definirlos dentro de esquema OpenAPI.
+
+Para ello, ver `02-OpenAPI-Schema`, la parte referida a los `properties` dentro de `items`.
+
+![alt OpenAPI Objects](./images/11-OpenAPI-Objects.png)
+
+![alt OpenAPI Objects Schema](./images/12-OpenAPI-Objects-Schema.png)
+
+**OpenAPI Enums**
+
+Vemos una herramienta muy poderosa de OpenAPI, las enumeraciones. Se usan cuando se tiene un conjunto limitado de valores.
+
+Las enumeraciones se pueden indicar de dos formas distintas.
+
+Una es usando una lista con los valores posibles:
+
+![alt OpenAPI Enums 1](./images/13-OpenAPI-Enums_1.png)
+
+La otra es indicando cada valor posible. Esta sintaxis es más del tipo YAML:
+
+![alt OpenAPI Enums 2](./images/14-OpenAPI-Enums_2.png)
