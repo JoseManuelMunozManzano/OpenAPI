@@ -180,3 +180,63 @@ Una es usando una lista con los valores posibles:
 La otra es indicando cada valor posible. Esta sintaxis es más del tipo YAML:
 
 ![alt OpenAPI Enums 2](./images/14-OpenAPI-Enums_2.png)
+
+## OpenAPI Components
+
+En esta sección veremos el uso de los componentes OpenAPI.
+
+La idea es poder reutilizar objetos de esquema y los componentes OpenAPI son una manera de poder estandarizar su uso.
+
+Nos ahorra mucho tiempo en la codificación y contribuye a la calidad de la especificación.
+
+Ver `03-OpenAPI-Components`.
+
+**OpenAPI Components Object**
+
+Vemos el objeto Components de OpenAPI.
+
+Documentación: `https://swagger.io/specification/#schema-object` y buscar `Components Object`.
+
+![alt OpenAPI Components Object](./images/15-OpenAPI-Components-Object.png)
+
+Su objetivo es contener objetos comunes del esquema. Por ejemplo, si tenemos varios endpoints que trabajan con un objeto, en el objeto Components podemos definirlo y reutilizarlo.
+
+Para reutilizarlo se utiliza un objeto Reference, es decir, en el lugar donde especificaríamos el esquema, informaremos una propiedad `$ref: #/components/schema/recurso`, donde `recurso` será un objeto de esquema o un objeto de referencia.
+
+Documentación: `https://swagger.io/specification/#reference-object`
+
+![alt OpenAPI Reference Object](./images/16-OpenAPI-Reference-Object.png)
+
+Hay realmente tres formas de definir un objeto de referencia:
+
+```
+$ref: '#/components/schemas/Pet'
+
+Relative Schema Document Example
+$ref: Pet.yaml
+
+Relative Documents With Embedded Schema Example
+$ref: definitions.yaml#/Pet
+```
+
+**Creating Reusable Customer Object**
+
+Ver `03-OpenAPI-Components`.
+
+Este es un ejemplo de uso:
+
+![alt Components Example](./images/17-Components-Example.png)
+
+**OpenAPI Object Inheritance**
+
+Nos permite heredar propiedades de un objeto diferente.
+
+Ver `03-OpenAPI-Components`, la parte `pagedResponse` y `beerPagedList`.
+
+Vemos como se usa la propiedad `allOf` para obtener herencia.
+
+![alt Object Inheritance Example 1](./images/18-Object-Inheritance-Example_1.png)
+
+Y en este ejemplo, decimos además que el contenido es un array de artículos de cerveza.
+
+![alt Object Inheritance Example 2](./images/19-Object-Inheritance-Example_2.png)
