@@ -240,3 +240,39 @@ Vemos como se usa la propiedad `allOf` para obtener herencia.
 Y en este ejemplo, decimos además que el contenido es un array de artículos de cerveza.
 
 ![alt Object Inheritance Example 2](./images/19-Object-Inheritance-Example_2.png)
+
+## OpenAPI Parameters
+
+En esta sección vamos a ver parámetros, en concreto nos referimos a los `query parameters` que se unen a la URL tras el signo de interrogación y a los `path parameters`.
+
+El objeto parameters también puede utilizarse para describir `headers` y valores de `cookies`, aunque no se usa mucho para eso.
+
+Vamos a construir componentes reutilizables con parámetros.
+
+**OpenAPI Parameter Object**
+
+Documentación: `https://swagger.io/specification/#reference-object` y buscar `Parameter Object`.
+
+Hay muchas propiedades disponibles, pero las tres propiedades obligatorias son las indicadas:
+
+![alt Parameter Object Required Properties](./images/20-Parameter-Object-Required-Properties.png)
+
+Y también hay una propiedad muy importante, `deprecated`, que a medida que evolucionan nuestras APIS, podemos indicar para hacer notar que se desaprueba ese parámetro.
+
+Hay todavía más propiedades disponibles, pero se usan mucho menos que las indicadas en la tabla.
+
+**Describing Query Parameters**
+
+En el ejemplo que podemos ver en `04-OpenAPI-Parameters` vamos a decirle a los consumidores de nuestra API como pueden pasar parámetros para implementar la paginación.
+
+![alt Query Parameters Example](./images/21-Query-Parameters-Example.png)
+
+También se pueden reutilizar si nos lo llevamos a un componente (ver `04-OpenAPI-Parameters`)
+
+**Describing URL Parameters**
+
+Vamos a ver como crear path parameters.
+
+![alt Path Parameters Example](./images/22-Path-Parameters-Example.png)
+
+También se pueden reutilizar si nos lo llevamos a un componente.
