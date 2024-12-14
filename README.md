@@ -498,3 +498,37 @@ Vemos como en la parte derecha, la gráfica, ha desaparecido el candado, lo que 
 Indicar que actualmente hay abiertos algunos problemas con el equipo OpenAPI en torno a como hacer esto, con algunos tickets en GitHub, por lo que esto podría cambiar.
 
 Incluso hay algunas herramientas de terceros que trabajan con OpenAPI donde el array vacío da ciertos problemas.
+
+## OpenAPI Code Gen
+
+Vamos a hablar de la generación de código con OpenAPI.
+
+Se va a dar una visión general de las herramientas que hay actualmente. El propio `Swagger Hub` nos permite generar código.
+
+Primero vamos a ver como generar código a partir de la especificación OpenAPI usando `OpenAPI Code Gen`.
+
+Luego vamos a mirar un cliente Java y un servidor Java con Spring.
+
+Los fuentes pueden encontrarse en `07-OpenAPI-Code-Gen`.
+
+**OpenAPI Code Gen**
+
+Documentación: `https://openapi-generator.tech/`
+
+En esta documentación se indica como puede instalarse usando Homebrew en Mac o en un contenedor de Docker.
+
+Y los generadores están aquí: `https://openapi-generator.tech/docs/generators`, donde, pulsando en uno de ellos, se indican las configuraciones que pueden hacerse.
+
+**OpenAPI Generated Java Client**
+
+En la página web de Swagger Hub donde hemos estado codificando nuestra especificación OpenAPI, en la parte de arriba a la derecha, tenemos el botón Export.
+
+Si pulsamos en dicho botón, tenemos acceso a distintas acciones, como generar código de cliente, de servidor, documentación, o descargar el código.
+
+El código de cliente generado puede verse en `07-OpenAPI-Code-Gen\java-client-generated`.
+
+En este código veremos que se han generado todas las clases necesarias para poder consumir esta API, incluidos algunos tests.
+
+**OpenAPI Generated Java Server**
+
+El código de servidor generado puede verse en `07-OpenAPI-Code-Gen\spring-server-generated`.
