@@ -437,3 +437,64 @@ En `05-OpenAPI-Requests` puede verse que se han creado los schemas `BeerOrder` y
 En esta segunda imagen lo que se indica en la anotación a OpenAPI es que vaya y obtenga ese `orderStatusCallbackUrl`.
 
 Es un `webhook` para notificar al consumer API de cualquier cambio de estado de la orden, por eso hacemos un `post` a esa URL con lo que se ha definido en la `requestBody`.
+
+## OpenAPI Security Definitions
+
+Una vez tenemos una especificación OpenAPI funcional que describe nuestros endpoints, lo normal es continuar con la seguridad. Hay diferentes opciones de seguridad que se pueden definir con OpenAPI.
+
+El fuente se puede ver en `06-OpenAPI-Security-Definitions`.
+
+**OpenAPI Security Scheme**
+
+Vamos a hablar sobre la documentación de requisitos de seguridad en OpenAPI.
+
+Documentación:
+
+- `https://swagger.io/specification/#reference-object` y buscar `Security Schema Object`
+- `https://swagger.io/docs/specification/v3_0/authentication/`
+
+OpenAPI admite varios esquemas de seguridad diferentes que pueden utilizarse para proteger la API. Este objeto es probablemente el más confuso de usar porque los distintos esquemas de seguridad tienen requisitos diferentes.
+
+Tenemos estándares conmúnmente definidos para la seguridad. En el segundo enlace de la documentación se habla del `RFC 7235` y del `HTTP Authentication Schema Registry`.
+
+Los esquemas más comunes que podemos ver son `Basic`, `Bearer` y `Oauth`, pero diferentes organizaciones usarán diferentes esquemas de seguridad.
+
+El enfoque de este curso es la documentación OpenAPI, por lo que no vamos a entrar a hablar de seguridad y autorización, solo como documentarlo.
+
+Lo principal que tenemos que entender es:
+
+- Cuando vamos a describir la seguridad, el único esquema necesario es `securitySchemes` y se informa bajo el objeto `components`
+- Cuando se define como deseamos aplicar la seguridad, la especificación OpenAPI tiene una propiedad `security` a nivel raiz que tomará una lista de `securitySchemes`. Es optativo informarlo y se aplicará en global a todo el documento OpenAPI, pero se puede anular a nivel `operation`, ya que también tiene un componente `security`
+- Los `scopes` son como roles. Algunas organizaciones lo usan y otras no
+
+**Basic Auth with OpenAPI**
+
+Vamos a configurar `Basic Auth` para nuestra API.
+
+![alt Basic Auth Example 1](./images/35-Basic-Auth-Example_1.png)
+
+Y si pulso el botón `Authorize` o el candado que aparece en los distintos endpoints, me aparece la siguiente ventana.
+
+![alt Basic Auth Example 2](./images/36-Basic-Auth-Example_2.png)
+
+**JWT Bearer Token Auth**
+
+El uso de tokens es otro formato de autenticación muy popular.
+
+![alt JWT Auth Example 1](./images/37-JWT-Auth-Example_1.png)
+
+Y si pulso el botón `Authorize` me aparece la siguiente ventana (solo muestro la parte de JWT):
+
+![alt JWT Auth Example 2](./images/38-JWT-Auth-Example_2.png)
+
+**Anonymous Authentication with OpenAPI**
+
+Vamos a ver como especificar endpoints que no requieren autenticación. Es un poco contraintuitivo.
+
+![alt Anonymous Authentication Example 2](./images/39-Anonymous-Authentication-Example.png)
+
+Vemos como en la parte derecha, la gráfica, ha desaparecido el candado, lo que indica que ese endpoint no requiere autorización.
+
+Indicar que actualmente hay abiertos algunos problemas con el equipo OpenAPI en torno a como hacer esto, con algunos tickets en GitHub, por lo que esto podría cambiar.
+
+Incluso hay algunas herramientas de terceros que trabajan con OpenAPI donde el array vacío da ciertos problemas.
