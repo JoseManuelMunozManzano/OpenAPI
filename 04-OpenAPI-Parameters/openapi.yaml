@@ -1,17 +1,17 @@
 openapi: 3.1.0
 info:
-  version: '1.0'
+  version: "1.0"
   title: OpenAPI Course
-  description: 'Specification for OpenAPI Course'
+  description: "Specification for OpenAPI Course"
   termsOfService: https://example.com/terms/
-  contact: 
+  contact:
     name: José Manuel
     url: https://www.linkedin.com/in/jos%C3%A9-manuel-mu%C3%B1oz-manzano-423665185/
     email: neil_mercury@yahoo.es
-  license: 
+  license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-servers: 
+servers:
   - url: https://dev.example.com
     description: Development Server
   - url: https://qa.example.com
@@ -22,18 +22,18 @@ paths:
   /v1/customers:
     get:
       parameters:
-        - $ref: '#/components/parameters/pageNumberParam'
-        - $ref: '#/components/parameters/pageSizeParam'
-      responses: 
-        '200':
+        - $ref: "#/components/parameters/pageNumberParam"
+        - $ref: "#/components/parameters/pageSizeParam"
+      responses:
+        "200":
           description: List of Customers
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/customerPagedList'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerPagedList"
   /v1/customers/{customerId}:
     get:
-      parameters: 
+      parameters:
         - name: customerId
           in: path
           description: Customer id
@@ -41,30 +41,30 @@ paths:
           schema:
             type: string
             format: uuid
-      responses: 
-        '200':
+      responses:
+        "200":
           description: Found Customer
           content:
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/customer'
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
   /v1/beers:
-    get: 
-      parameters: 
-        - $ref: '#/components/parameters/pageNumberParam'
-        - $ref: '#/components/parameters/pageSizeParam'
-      responses: 
-        '200':
+    get:
+      parameters:
+        - $ref: "#/components/parameters/pageNumberParam"
+        - $ref: "#/components/parameters/pageSizeParam"
+      responses:
+        "200":
           description: List of Beers
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/beerPagedList'
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/beerPagedList"
+        "404":
           description: No Beers Found
   /v1/beers/{beerId}:
     get:
-      parameters: 
+      parameters:
         - name: beerId
           in: path
           description: Beer id
@@ -72,21 +72,21 @@ paths:
           schema:
             type: string
             format: uuid
-      responses: 
-        '200':
+      responses:
+        "200":
           description: Found Beer
-          content: 
-            application/json: 
+          content:
+            application/json:
               schema:
-                $ref: '#/components/schemas/beer'
-components: 
-  parameters: 
+                $ref: "#/components/schemas/beer"
+components:
+  parameters:
     pageNumberParam:
       name: pageNumber
       in: query
       description: Page Number
       required: false
-      schema: 
+      schema:
         type: integer
         format: int32
         default: 1
@@ -95,14 +95,14 @@ components:
       in: query
       description: Page Size
       required: false
-      schema: 
+      schema:
         type: integer
         format: int32
         default: 25
-  schemas: 
+  schemas:
     address:
       type: object
-      properties: 
+      properties:
         line1:
           type: string
           example: 123 main
@@ -127,7 +127,7 @@ components:
     customer:
       type: object
       description: Customer Object
-      properties: 
+      properties:
         id:
           type: string
           format: uuid
@@ -142,24 +142,24 @@ components:
           maxLength: 100
           example: Muñoz
         address:
-          $ref: '#/components/schemas/address'
+          $ref: "#/components/schemas/address"
     customerList:
       type: array
       minItems: 1
       maxItems: 100
       description: List of Customers
-      items: 
-        $ref: '#/components/schemas/customer'
+      items:
+        $ref: "#/components/schemas/customer"
     customerPagedList:
       type: object
-      allOf: 
-        - $ref: '#/components/schemas/pagedResponse'
-      properties: 
+      allOf:
+        - $ref: "#/components/schemas/pagedResponse"
+      properties:
         content:
-          $ref: '#/components/schemas/customerList'
+          $ref: "#/components/schemas/customerList"
     brewery:
       type: object
-      properties: 
+      properties:
         name:
           type: string
         location:
@@ -172,7 +172,7 @@ components:
           type: string
         style:
           type: string
-          enum: 
+          enum:
             - ALE
             - PALE_ALE
             - IPA
@@ -187,24 +187,24 @@ components:
           type: integer
           format: int32
         brewery:
-          $ref: '#/components/schemas/brewery'
+          $ref: "#/components/schemas/brewery"
     beerList:
       type: array
       description: List of Beers
       items:
-        $ref: '#/components/schemas/beer'
+        $ref: "#/components/schemas/beer"
     beerPagedList:
       type: object
       allOf:
-        - $ref: '#/components/schemas/pagedResponse'
+        - $ref: "#/components/schemas/pagedResponse"
       properties:
         content:
-          $ref: '#/components/schemas/beerList'
+          $ref: "#/components/schemas/beerList"
     pagedResponse:
       type: object
       properties:
         pageable:
-          $ref: '#/components/schemas/pagedResponse_pageable'
+          $ref: "#/components/schemas/pagedResponse_pageable"
         totalPages:
           type: integer
           format: int32
@@ -223,7 +223,7 @@ components:
           type: integer
           format: int32
         sort:
-          $ref: '#/components/schemas/pagedResponse_pageable_sort'
+          $ref: "#/components/schemas/pagedResponse_pageable_sort"
         first:
           type: boolean
     pagedResponse_pageable_sort:
@@ -237,7 +237,7 @@ components:
       type: object
       properties:
         sort:
-          $ref: '#/components/schemas/pagedResponse_pageable_sort'
+          $ref: "#/components/schemas/pagedResponse_pageable_sort"
         offset:
           type: integer
           format: int32

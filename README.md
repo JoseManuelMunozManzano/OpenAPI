@@ -276,3 +276,164 @@ Vamos a ver como crear path parameters.
 ![alt Path Parameters Example](./images/22-Path-Parameters-Example.png)
 
 También se pueden reutilizar si nos lo llevamos a un componente.
+
+## OpenAPI Requests
+
+Esta es probablemente la sección más importante del curso.
+
+Veremos tanto los requests body como los response body y los response code, así hasta describir completamente una API RESTFul.
+
+El código correspondiente a esta sección puede verse en `05-OpenAPI-Requests`.
+
+Documentación: `https://swagger.io/specification/#reference-object` y buscar `Operation Object`.
+
+**OpenAPI Operation Summaries and Descriptions**
+
+OpenAPI tiene dos propiedades que nos ayudan a describir lo que hace el endpoint. Uno es `Summary` y el otro es `Description`.
+
+`Summary` es una descripción de alto nivel.
+
+![alt Summary Example](./images/23-OpenAPI-Summary-Example.png)
+
+`Description` es una descripción más detallada de lo que hace el endpoint. Se puede codificar usando `Markdown`
+
+![alt Description Example](./images/24-OpenAPI-Description-Example.png)
+
+```
+# Usando markdown
+description: _Get a single **Customer** by its Id_
+```
+
+**OpenAPI Operation Tags**
+
+Podemos usar la propiedad `tags` para controlar como se agrupan nuestras operaciones en la documentación.
+
+Se indica una lista de valores, como en este ejemplo:
+
+![alt Tags Example](./images/25-OpenAPI-Tags-Example.png)
+
+`tags` puede aparecer antes o después de summary o description. El orden no importa, la indentación si.
+
+Se puede indicar más de un `tags` para un endpoint.
+
+```
+tags: 
+  - Beers
+  - V1 Beers
+```
+
+Conforme más compleja se vaya haciendo la especificación API, más importancia cobra la propiedad `tags`.
+
+**OpenAPI Operation Id**
+
+La propiedad `operationId` es opcional, pero si se informa debe ser una cadena `única`, para identificar una operación en nuestra especificación OpenAPI.
+
+Distingue entre mayúsculas y minúsculas y es recomendable seguir convenciones comunes de nomenclatura de programación (Java en mi caso).
+
+Se usa cuando queremos utilizar herramientas para generación de código.
+
+![alt OperationId Example](./images/26-OpenAPI-OperationId-Example.png)
+
+**Describing RESTFul Create**
+
+Creamos en código (ver `05-OpenAPI-Requests`) una operación para crear un cliente, siguiendo las convenciones `REST`, es decir, usando una operación `POST`.
+
+Usaremos el objeto `requestBody`.
+
+Ver `https://swagger.io/specification/#reference-object` y buscar `Request Body`.
+
+![alt RequestBody Object](./images/27-RequestBody-Object.png)
+
+Esto es lo mínimo necesario para una operación `post`:
+
+![alt Post Operation Example](./images/28-Post-Operation-Example.png)
+
+En este código hay dos problemas que vamos a solucionar más adelante:
+
+- No sabemos el `customerId` que se ha creado
+- Le estamos diciendo al cliente que pase el valor Id (en el schema), pero es el servidor el que está creando ese Id.
+
+**Describing Response Headers**
+
+En este punto solucionamos el primer problema descrito anteriormente.
+
+En un RESTFul, en la propiedad `headers` de la respuesta de un recurso se indica al cliente donde obtener el `customerId` que se ha creado, en una propiedad llamada `Location`.
+
+![alt Response Headers Example](./images/29-Response-Headers-Example.png)
+
+También se pueden añadir más propiedades en la caceceras de las repuestas, dependiendo de los casos de uso de nuestra aplicación.
+
+**Read Only Properties**
+
+En este punto solucionamos el segundo problema descrito anteriormente.
+
+Lo que queremos hacer es describir que el valor `Id` no se espera en el `post` que hacemos para crear un nuevo cliente.
+
+Documentación: `https://swagger.io/docs/specification/v3_0/data-models/data-types/` y buscar `readOnly`.
+
+`readOnly` es solo relevante para las propiedades de `schema` y declara que, si su valor es `true`, una propiedad es de solo lectura y que no debe ser enviada como parte de la `request` y que viene en el cuerpo de la `response`.
+
+Existe también `writeOnly`, que funciona al revés, es decir, va en el `request`, pero no se devuelve en la `response`. Un caso de uso sería un password, que se envía en la request pero que no se devuelve en la response.
+
+![alt Read Only Example](./images/30-Read-Only-Example.png)
+
+Vemos en la imagen como, al añadir la propiedad `readOnly` con valor `true`, en la parte derecha ya no se ve la propiedad `id`.
+
+**Describing RESTFul Update**
+
+Vamos a describir una operación API para actualizar (hacer un `put`) un `customer`.
+
+![alt Put Operation Example](./images/31-Put-Operation-Example.png)
+
+**Describing RESTFul Delete**
+
+Vamos a describir una operación API para eliminar (hacer un `delete`) un `customer`.
+
+![alt Delete Operation Example](./images/32-Delete-Operation-Example.png)
+
+**Describing Additional Responses**
+
+Hasta ahora solo hemos estado describiendo el camino feliz, asumiendo que todo va a ocurrir de forma correcta.
+
+Para los consumidores de nuestra API es muy importante indicar que pueden esperar si algo no va bien.
+
+En nuestra operación `post` vamos a indicar los códigos de respuesta:
+
+- 400: Bad Request, en caso de que nos manden en la request un objeto customer erróneo
+- 409: Conflict
+
+En nuestra operación `get by Id` vamos a indicar el código de respuesta:
+
+- 404: Not Found, en caso de que el Id indicado en la request no exista
+
+En nuestra operación `put` vamos a indicar los códigos de respuesta:
+
+- 400: Bad Request, en caso de que nos manden en la request un objeto customer erróneo
+- 404: Not Found, en caso de que el Id indicado en la request no exista
+- 409: Conflict
+
+En nuestra operación `delete` vamos a indicar el código de respuesta:
+
+- 404: Not Found, en caso de que el Id indicado en la request no exista
+
+**OpenAPI Callbacks**
+
+Documentación: 
+
+- `https://swagger.io/docs/specification/v3_0/callbacks/`
+- `https://swagger.io/specification/` y buscar `Callback Object`
+- `https://spec.openapis.org/oas/v3.1.1.html#callback-object`
+
+En esta era de programación web, se ve con más frecuencia que las comunicaciones se establecen usando `webhooks`, también conocidos como `callbacks` en el lenguaje OpenAPI.
+
+Lo que vamos a querer es configurar un escenario en el que vamos a tener un tipo de devolución de llamada especificada por nuestra aplicación. Es decir, cuando se utilice este API podemos decir que queremos recibir una response de una URl específica, y vamos a describir que response y callback es.
+
+En `05-OpenAPI-Requests` puede verse que se han creado los schemas `BeerOrder` y `BeerOrderLine` y el endpoint `/v1/customers/{customerId}/orders` para que los customers puedan realizar orders. En el podemos ver el siguiente callback.
+
+![alt Callback Example 1](./images/33-Callback-Example_1.png)
+
+![alt Callback Example 2](./images/34-Callback-Example_2.png)
+
+En esta segunda imagen lo que se indica en la anotación a OpenAPI es que vaya y obtenga ese `orderStatusCallbackUrl`.
+
+Es un `webhook` para notificar al consumer API de cualquier cambio de estado de la orden, por eso hacemos un `post` a esa URL con lo que se ha definido en la `requestBody`.
